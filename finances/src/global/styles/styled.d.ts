@@ -6,5 +6,3 @@ declare module 'styled-components' {
 
   export interface DefaultTheme extends ThemeType {}
 }
-
-// sobrescreve o tema padrão do styled component
