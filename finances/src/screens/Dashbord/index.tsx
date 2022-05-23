@@ -1,6 +1,5 @@
 import React from 'react';
-import {  Text } from 'react-native';
-
+import { MainCard } from '../../components/MainCard';
 import { Container, Header, UserWrapping, UserInfo, Photo, User, Greetings, UserName, Icon } from './style';
 
 export function Dashbord() {
@@ -18,6 +17,7 @@ export function Dashbord() {
           <Icon name="power" />
         </UserWrapping>
       </Header>
+      <MainCard />
     </Container>
   )
 }
