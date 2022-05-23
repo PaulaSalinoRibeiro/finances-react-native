@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Text } from 'react-native';
 
-import { Container, Header, UserWrapping, UserInfo, Photo, User, Greetings, UserName } from './style';
+import { Container, Header, UserWrapping, UserInfo, Photo, User, Greetings, UserName, Icon } from './style';
 
 export function Dashbord() {
   return (
@@ -15,6 +15,7 @@ export function Dashbord() {
               <UserName>Paula</UserName>
             </User>
           </UserInfo>
+          <Icon name="power" />
         </UserWrapping>
       </Header>
     </Container>
