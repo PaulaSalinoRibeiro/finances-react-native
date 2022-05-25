@@ -1,6 +1,15 @@
 import React from 'react';
 import { MainCard } from '../../components/MainCard';
-import { Container, Header, UserWrapping, UserInfo, Photo, User, Greetings, UserName, Icon } from './style';
+import { Container,
+  Header, 
+  UserWrapping, 
+  UserInfo, 
+  Photo, 
+  User, 
+  Greetings, 
+  UserName, 
+  Icon,
+  MainCards } from './style';
 
 export function Dashbord() {
   return (
@@ -17,7 +26,11 @@ export function Dashbord() {
           <Icon name="power" />
         </UserWrapping>
       </Header>
-      <MainCard />
+      <MainCards>
+        <MainCard type='up' title='Entrada' amount='1000,00' lastTransition='Última entrada dia 23 de Maio' />
+        <MainCard type='down' title='Saida' amount='500,00' lastTransition='Última entrada dia 23 de Maio' />
+        <MainCard type='total' title='Total' amount='500,00' lastTransition='Última entrada dia 23 de Maio' />
+      </MainCards>
     </Container>
   )
 }

@@ -1,21 +1,40 @@
 import React from 'react';
-import { Container, Header, Title, Icon, Footer, Amount, LastTransition } from './style';
+import { Container,
+  Header, 
+  Title, 
+  Icon, 
+  Footer, 
+  Amount, 
+  LastTransition } from './style';
 
-export function MainCard() {
+  interface Props {
+    type: 'up' | 'down' | 'total';
+    title: string;
+    amount: string;
+    lastTransition: string;
+  }
+
+  const icon = {
+    up: 'arrow-up-circle',
+    down: 'arrow-down-circle',
+    total: 'dollar-sign',
+  }
+
+export function MainCard({type, title, amount, lastTransition} : Props) {
   return (
-    <Container>
+    <Container type={type}>
       <Header>
-        <Title>
-          Entrada
+        <Title type={type}>
+          {title}
         </Title>
-        <Icon name="arrow-up-circle"/>
+        <Icon name={icon[type]} type={type}/>
       </Header>
       <Footer>
-        <Amount>
-          R$ 1000,00
+        <Amount type={type}>
+          {amount}
         </Amount>
-        <LastTransition>
-          Última entrada dia 23 de Maio
+        <LastTransition type={type}>
+          {lastTransition}
         </LastTransition>
       </Footer>
     </Container>
