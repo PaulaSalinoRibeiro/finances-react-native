@@ -37,7 +37,10 @@ export function SelectCategory({category, setCategory, closeSelectCategory}: Pro
         style={{flex: 1, width: '100%'}}
         keyExtractor={(item) => item.key}
         renderItem={({item}) => (
-          <Category>
+          <Category
+            onPress={() => setCategory(item)}
+            isActive={category.key === item.key}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </Category>
@@ -46,7 +49,10 @@ export function SelectCategory({category, setCategory, closeSelectCategory}: Pro
       />
 
       <Footer>
-        <Button title="Selecionar" />
+        <Button 
+          title="Selecionar"
+          onPress={closeSelectCategory}
+        />
       </Footer>
     </Container>
   )
