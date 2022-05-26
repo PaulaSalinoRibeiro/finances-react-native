@@ -1,7 +1,6 @@
 import React from 'react';
-import { getBottomSpace } from 'react-native-iphone-x-helper'; 
 import { MainCard } from '../../components/MainCard';
-import { TransactionsCards } from '../../components/TransactionsCards';
+import { TransactionsCards, TransactionsCardsProps } from '../../components/TransactionsCards';
 import { 
   Container,
   Header, 
@@ -18,11 +17,17 @@ import {
   TransactionList
  } from './style';
 
+ export interface DataListProps extends TransactionsCardsProps {
+   id: string;
+ };
+
 export function Dashbord() {
-  const data = [
+  const data : DataListProps[] = [
     {
+    id: '1',
+    type: 'positive',
     title: 'Desenvolvimento de site',
-    amount: '12000,00',
+    amount: 'R$ 12000,00',
     category : {
       name: 'Vendas',
       icon: 'dollar-sign'
@@ -30,32 +35,38 @@ export function Dashbord() {
     date: '25/05/2022',
     },
     {
+    id: '2',
+    type: 'negative',
+    title: 'Desenvolvimento de site',
+    amount: 'R$ 12000,00',
+    category : {
+      name: 'Vendas',
+      icon: 'dollar-sign'
+      },
+    date: '25/05/2022',
+    },
+    {
+      id: '3',
+      type: 'negative',
       title: 'Desenvolvimento de site',
-      amount: '12000,00',
+      amount: 'R$ 12000,00',
       category : {
         name: 'Vendas',
         icon: 'dollar-sign'
         },
       date: '25/05/2022',
-      },
-      {
-        title: 'Desenvolvimento de site',
-        amount: '12000,00',
-        category : {
-          name: 'Vendas',
-          icon: 'dollar-sign'
-          },
-        date: '25/05/2022',
+    },
+    {
+      id: '4',
+      type: 'positive',
+      title: 'Desenvolvimento de site',
+      amount: 'R$ 12000,00',
+      category : {
+        name: 'Vendas',
+        icon: 'dollar-sign'
         },
-        {
-          title: 'Desenvolvimento de site',
-          amount: '12000,00',
-          category : {
-            name: 'Vendas',
-            icon: 'dollar-sign'
-            },
-          date: '25/05/2022',
-          },
+      date: '25/05/2022',
+    },
   ];
 
   return (
@@ -100,11 +111,8 @@ export function Dashbord() {
         
         < TransactionList
           data={data}
+          keyExtractor={item => item.id}
           renderItem={({item}) => <TransactionsCards data={item}/>}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBotton: getBottomSpace()
-          }}
         />
 
         
