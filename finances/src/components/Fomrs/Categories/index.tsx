@@ -5,7 +5,7 @@ interface Props {
   title: string;
 }
 
-export function SelectCategory({title}: Props) {
+export function Categories({title}: Props) {
   return(
     <Container>
       <Category>{title}</Category>
