@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
 import {
@@ -23,9 +24,11 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Register/>
-    </ThemeProvider>
+    <NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <Register/>
+      </ThemeProvider>
+    </NavigationContainer>
   );
 }
 

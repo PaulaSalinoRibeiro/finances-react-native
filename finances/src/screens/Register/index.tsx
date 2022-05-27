@@ -17,11 +17,23 @@ interface DataForm {
   amount: string;
 }
 
+const schema = Yup.object(
+  {
+    name: Yup.string().required('Nome é obrigatório'),
+    amount: Yup.number()
+    .required('Informe um valor numérico')
+    .positive('O numero não pode ser negativo')
+    .required('O valor é obrigatório')
+  }
+)
+
 export function Register() {
   const [transactionType, setTransactionType] =useState('');
   const [openModal, setOpenModal] = useState(false);
   const [category, setCategory] =useState({ key: 'category', name: 'Categoria'});
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, formState:{ errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
 
   function handleTransactionType(type: 'up' | 'down') {
     setTransactionType(type);
@@ -66,12 +78,14 @@ export function Register() {
                 placeholder="Nome"
                 autoCapitalize="sentences"
                 autoCorrect={false}
+                error={errors.name && errors.name.message}
               />
               <InputForm 
                 name="amount"
                 control={control}
                 placeholder="Preço"
                 keyboardType="numeric"
+                error={errors.amount && errors.amount.message}
               />
               <TransactionTypes>
                 <TransactionTypeButton
