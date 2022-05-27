@@ -3,6 +3,7 @@ import {Modal, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { InputForm } from '../../components/Fomrs/InputForm';
 import { Button } from '../../components/Fomrs/Button';
@@ -35,6 +36,8 @@ export function Register() {
     resolver: yupResolver(schema)
   });
 
+  const dataKey = '@finances:transaction'
+
   function handleTransactionType(type: 'up' | 'down') {
     setTransactionType(type);
   }
@@ -47,19 +50,28 @@ export function Register() {
     setOpenModal(true);
   }
 
-  function handleRegister(form: DataForm) {
+  async function handleRegister(form: DataForm) {
     if(!transactionType) return Alert.alert('Selecione o tipo da transação');
 
     if(category.key === 'category') return Alert.alert('Selecione o tipo da categoria');
 
-    const data = {
+    const newData = {
       name: form.name,
       amount: form.amount,
       transactionType,
       category: category.key,
     };
 
-    console.log(data);
+    try {
+      const data = await AsyncStorage.getItem(dataKey);
+      const transaction = data ? JSON.parse(data) : [];
+      const dataFormatted = [...transaction, newData];
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Não foi possível salvar')
+    }
   }
 
   return (
