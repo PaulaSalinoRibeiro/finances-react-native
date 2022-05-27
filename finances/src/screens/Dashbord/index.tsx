@@ -1,7 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+
 import { MainCard } from '../../components/MainCard';
 import { TransactionsCards, TransactionsCardsProps } from '../../components/TransactionsCards';
+
 import { 
   Container,
   Header, 
@@ -53,7 +56,12 @@ export function Dashbord() {
   
   useEffect(() => {
     loadingTransactions();
+    // AsyncStorage.removeItem(dataKey);
   }, []);
+
+  useFocusEffect(useCallback(() => {
+    loadingTransactions();
+  }, []))
 
   return (
     <Container>
