@@ -24,11 +24,11 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
         <AppRoutes/>
-      </ThemeProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 
