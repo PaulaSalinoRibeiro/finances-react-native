@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native';
 
 import { InputForm } from '../../components/Fomrs/InputForm';
 import { Button } from '../../components/Fomrs/Button';
@@ -32,10 +34,11 @@ export function Register() {
   const [transactionType, setTransactionType] =useState('');
   const [openModal, setOpenModal] = useState(false);
   const [category, setCategory] =useState({ key: 'category', name: 'Categoria'});
-  const { control, handleSubmit, formState:{ errors } } = useForm({
+  const { control, handleSubmit, reset, formState:{ errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
+  const navigation = useNavigation();
   const dataKey = '@finances:transaction'
 
   function handleTransactionType(type: 'up' | 'down') {
@@ -56,10 +59,12 @@ export function Register() {
     if(category.key === 'category') return Alert.alert('Selecione o tipo da categoria');
 
     const newData = {
+      id: String(uuid.v4()) ,
       name: form.name,
       amount: form.amount,
       transactionType,
       category: category.key,
+      date: new Date()
     };
 
     try {
@@ -67,6 +72,11 @@ export function Register() {
       const transaction = data ? JSON.parse(data) : [];
       const dataFormatted = [...transaction, newData];
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+      setTransactionType('');
+      setCategory({ key: 'category', name: 'Categoria'});
+      reset();
+
+      navigation.navigate('Listagem');
 
     } catch (error) {
       console.log(error);
