@@ -39,7 +39,7 @@ export function Register() {
   });
 
   const navigation = useNavigation();
-  const dataKey = '@finances:transaction'
+  const dataKey = '@finances:transaction';
 
   function handleTransactionType(type: 'up' | 'down') {
     setTransactionType(type);
