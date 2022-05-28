@@ -53,8 +53,7 @@ export function Dashbord() {
       .filter((item) => item.type === 'positive')
       .map((item) => new Date(item.date).getTime())));
 
-     return `${lastTransition.getDate()} 
-      de ${lastTransition.toLocaleString('pt-BR', {month: 'long'})}`
+     return `${lastTransition.getDate()} de ${lastTransition.toLocaleString('pt-BR', {month: 'long'})}`
 
   }
 
@@ -100,15 +99,15 @@ export function Dashbord() {
     setHighlight({
       entries: {
         amount: entriesTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
-        lastTransition: `Última entrada ${lastEntries}`,
+        lastTransition: lastEntries,
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
-        lastTransition: `Última saída ${lastExpensive}`,
+        lastTransition: lastExpensive,
       },
       total: {
         amount: total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
-        lastTransition: interval,
+        lastTransition: lastExpensive,
       } 
     });
 
@@ -159,19 +158,19 @@ export function Dashbord() {
               type='up' 
               title='Entrada' 
               amount={higlight.entries.amount}
-              lastTransition={higlight.entries.lastTransition}
+              lastTransition={`Última entrada ${higlight.entries.lastTransition}`}
             />
             <MainCard 
               type='down' 
               title='Saida' 
               amount={higlight.expensives.amount}
-              lastTransition={higlight.expensives.lastTransition} 
+              lastTransition={`Última saída ${higlight.expensives.lastTransition}`} 
             />
             <MainCard 
               type='total' 
               title='Total' 
               amount={higlight.total.amount} 
-              lastTransition={higlight.total.lastTransition} 
+              lastTransition={`01 a ${higlight.expensives.lastTransition}`} 
             />
           </MainCards>
 
