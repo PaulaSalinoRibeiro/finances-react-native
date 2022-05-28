@@ -31,6 +31,7 @@ import {
 
  interface HiglightProps {
    amount: string;
+   lastTransition: string;
  }
 
  interface HiglightData {
@@ -45,6 +46,17 @@ export function Dashbord() {
   const [higlight, setHighlight] = useState<HiglightData>({} as HiglightData);
   const dataKey = '@finances:transaction';
   const theme = useTheme();
+
+  function lastTransition(collection : DataListProps[], type: 'positive' | 'negative') {
+
+    const lastTransition = new Date(Math.max.apply(Math, collection
+      .filter((item) => item.type === 'positive')
+      .map((item) => new Date(item.date).getTime())));
+
+     return `${lastTransition.getDate()} 
+      de ${lastTransition.toLocaleString('pt-BR', {month: 'long'})}`
+
+  }
 
   async function loadingTransactions() {
     const response = await AsyncStorage.getItem(dataKey);
@@ -80,15 +92,23 @@ export function Dashbord() {
     const total = entriesTotal - expensiveTotal;
 
     setData(transactionFormatted);
+
+    const lastEntries = lastTransition(transaction, 'positive');
+    const lastExpensive = lastTransition(transaction, 'negative');
+    const interval = `01 a ${lastExpensive} `
+
     setHighlight({
       entries: {
         amount: entriesTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
+        lastTransition: `Última entrada ${lastEntries}`,
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
+        lastTransition: `Última saída ${lastExpensive}`,
       },
       total: {
         amount: total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
+        lastTransition: interval,
       } 
     });
 
@@ -139,19 +159,19 @@ export function Dashbord() {
               type='up' 
               title='Entrada' 
               amount={higlight.entries.amount}
-              lastTransition='Última entrada dia 23 de Maio' 
+              lastTransition={higlight.entries.lastTransition}
             />
             <MainCard 
               type='down' 
               title='Saida' 
               amount={higlight.expensives.amount}
-              lastTransition='Última entrada dia 23 de Maio' 
+              lastTransition={higlight.expensives.lastTransition} 
             />
             <MainCard 
               type='total' 
               title='Total' 
               amount={higlight.total.amount} 
-              lastTransition='Última entrada dia 23 de Maio' 
+              lastTransition={higlight.total.lastTransition} 
             />
           </MainCards>
 
