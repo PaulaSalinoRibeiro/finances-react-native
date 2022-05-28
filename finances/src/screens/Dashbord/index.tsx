@@ -94,7 +94,6 @@ export function Dashbord() {
 
     const lastEntries = lastTransition(transaction, 'positive');
     const lastExpensive = lastTransition(transaction, 'negative');
-    const interval = `01 a ${lastExpensive} `
 
     setHighlight({
       entries: {
